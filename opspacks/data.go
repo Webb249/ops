@@ -7,7 +7,7 @@ import "fmt"
 // then it will test if the value is lower than warning and critical.
 // Returns a status code for OK, WARNING and CRITICAL.
 func Evaluate(warning int, critical int, value int, reverse bool) Status {
-	if reverse == true {
+	if reverse == false {
 		if value >= critical {
 			return CRITICAL
 		} else if value >= warning {
