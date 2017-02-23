@@ -158,25 +158,24 @@ func CheckPort(portValue string) {
 
 // Checks the flag has a value
 // Arguments are in the order flagValue, flagName, flagCharater repeated
-func CheckFlags(args ...string) {
+func CheckFlags(args ...string) error {
 	for i := range args {
 		if args[i] == "" {
-			err := errors.New("Flag check error")
-			ExitAtError(err, args[i+1]+" (-"+args[i+2]+") is a required argument")
+			return errors.New(args[i+1]+" (-"+args[i+2]+") is a required argument")
 		}
 		i =+ 2
 	}
+	return nil
 }
 
-func DecodeJsonToMap(bodyText string) map[string]interface{} {
+func DecodeJsonToMap(bodyText string) (map[string]interface{}, error){
 	var m interface{}
 
 	json.Unmarshal([]byte(bodyText), &m)
 	if mapValue, ok := m.(map[string]interface{}); ok {
-		return mapValue
+		return mapValue, nil
 	} else {
-			Exit(CRITICAL, "Error Converting Body Text to string")
+			return nil, errors.New("Error Converting Body Text to string")
 	}
-
-	return nil
+	return nil, nil
 }
